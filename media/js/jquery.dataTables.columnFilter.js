@@ -1,8 +1,9 @@
-﻿/*
+/*
 * File:        jquery.dataTables.columnFilter.js
-* Version:     1.5.1.
+* Version:     1.5.2.
 * Author:      Jovan Popovic 
-* 
+* Author:      Thibault Duchateau
+*  
 * Copyright 2011-2012 Jovan Popovic, all rights reserved.
 *
 * This source file is free software, under either the GPL v2 license or a
@@ -13,7 +14,7 @@
 * or FITNESS FOR A PARTICULAR PURPOSE. 
 * 
 * Parameters:"
-* @sPlaceHolder                 String      Place where inline filtering function should be placed ("tfoot", "thead:before", "thead:after"). Default is "tfoot"
+* @sPlaceHolder                 String      Place where inline filtering function should be placed ("tfoot", "thead:before", "thead:after", "none"). Default is "tfoot"
 * @sRangeSeparator              String      Separator that will be used when range values are sent to the server-side. Default value is "~".
 * @sRangeFormat                 string      Default format of the From ... to ... range inputs. Default is From {from} to {to}
 * @aoColumns                    Array       Array of the filter settings that will be applied on the columns
@@ -661,8 +662,13 @@
                 sFilterRow = "tr:first";
 
                 oHost = oTable.fnSettings().nTHead;
+            } else if (properties.sPlaceHolder == "none") {
 
-                
+                if (oTable.fnSettings().bSortCellsTop) {
+                    aoFilterCells = oTable.fnSettings().aoHeader[1];
+                } else {
+                    aoFilterCells = oTable.fnSettings().aoHeader[0];
+                }
             }
 
             //$(sFilterRow + " th", oHost).each(function (index) {//bug with ColVis
