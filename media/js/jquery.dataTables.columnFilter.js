@@ -678,8 +678,13 @@
                     aoColumn = properties.aoColumns[i];
                 }
                 
-                // Clear text inside the cell
-                $($(this)[0].cell).text("");
+                label = $($(this)[0].cell).text(); //Fix for ColVis
+                
+                // Clear text inside the duplicated cells (containing the filtering elements)
+                // Except if filtering is done in an external form
+                if(properties.sPlaceHolder != "none" && aoColumn.type == "null") {
+                	$($(this)[0].cell).text("");
+                }
                 
                 if (aoColumn.sSelector == null) {
                     //th = $($(this)[0]);//Before fix for ColVis
